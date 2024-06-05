@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { tasks, completedTasks, notifications, type Task } from '../store';
+  import { tasks, completedTasks, notifications } from '../store';
+  import type { Task } from '../store';
 
   export let task: Task;
 

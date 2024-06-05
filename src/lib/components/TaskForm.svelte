@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { tasks, Task } from '../store';
+  import { tasks } from '../store';
+  import type { Task } from '../store';
 
   let taskName = '';
   let category: string = 'Work';

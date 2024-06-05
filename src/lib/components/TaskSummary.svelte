@@ -1,6 +1,7 @@
 <script lang="ts">
   import { derived } from 'svelte/store';
-  import { completedTasks, type Task } from '../store';
+  import { completedTasks } from '../store';
+  // import type { Task } from '../store';
 
   const dailySummary = derived(completedTasks, $completedTasks => {
     const today = new Date().toISOString().split('T')[0];
