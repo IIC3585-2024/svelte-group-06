@@ -1,5 +1,7 @@
 <script lang="ts">
   import { tasks } from '$lib/store';
+  import { goto } from '$app/navigation';
+
   let taskName = '';
   let category = 'Trabajo';
   let estimatedTime = 1;
@@ -35,6 +37,7 @@
       category = 'Trabajo';
       estimatedTime = 1;
       description = '';
+      goto('/')
     }
   }
 </script>

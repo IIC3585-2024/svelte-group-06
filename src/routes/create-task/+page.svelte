@@ -10,8 +10,6 @@
   main {
     padding: 1rem;
     font-family: 'Roboto', sans-serif;
-    width: 70%;
-    align-items: center;
   }
 
   h1 {
