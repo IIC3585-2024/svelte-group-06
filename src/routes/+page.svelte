@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Header from '$lib/components/Header.svelte';
   import TaskForm from '$lib/components/TaskForm.svelte';
   import TaskList from '$lib/components/TaskList.svelte';
   import CategoryFilter from '$lib/components/CategoryFilter.svelte';
@@ -26,13 +25,8 @@
   $: filteredTasks = $tasks.filter((task: Task) => currentFilter === 'All' || task.category === currentFilter);
 </script>
 
-<Header title="Task Timer" />
-
 <main>
   <div class="main-container">
-    <div class="form-container">
-      <TaskForm />
-    </div>
     <div class="tasks-container">
       <div class="button-container">
         <button class="toggle-button" class:selected={display === 'tasks'} on:click={() => setDisplay('tasks')}>Tareas</button>
@@ -51,28 +45,36 @@
 </main>
 
 <style>
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+
   .main-container {
     display: flex;
-    flex-direction: row;
-    gap: 5rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
     padding: 1rem;
+    box-sizing: border-box;
+    margin-top: 1rem;
   }
 
   .button-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
-    gap: 5rem;
+    gap: 2rem;
+    margin-bottom: 2rem;
   }
 
   .toggle-button {
     cursor: pointer;
     color: #a2a1a1;
-    margin: 0;
     font-size: 1.5rem;
-    font-family: 'Times New Roman', sans-serif;
-    align-items: center;
     text-align: center;
     font-weight: bolder;
     margin-bottom: 1rem;
@@ -81,17 +83,16 @@
     padding: 0;
     cursor: pointer;
     outline: inherit;
-  }.selected {
-    color: #6200ea;
   }
 
-  .form-container {
-    width: 30%;
+  .toggle-button.selected {
+    color: #6200ea;
   }
 
   .tasks-container {
     display: flex;
     flex-direction: column;
     width: 60%;
+    font-family: 'Roboto', sans-serif;
   }
 </style>
