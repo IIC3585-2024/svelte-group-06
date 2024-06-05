@@ -8,7 +8,7 @@
     notifications.subscribe(value => {
       message = value;
       if (value) {
-        setTimeout(() => notifications.set(''), 3000);
+        setTimeout(() => notifications.set(''), 5000);
       }
     });
   });
@@ -26,5 +26,6 @@
     color: white;
     padding: 1rem;
     margin-top: 1rem;
+    border-radius: 4px;
   }
 </style>

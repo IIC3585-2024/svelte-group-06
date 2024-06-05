@@ -5,8 +5,19 @@
   export let tasks: Task[] = [];
 </script>
 
-<ul>
+<div class="tasks-list">
   {#each tasks as task (task.id)}
     <TaskItem {task} />
   {/each}
-</ul>
+</div>
+
+<style>
+  .tasks-list {
+    align-items: stretch;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 1rem;
+
+  }
+</style>

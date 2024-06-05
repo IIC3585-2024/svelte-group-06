@@ -4,8 +4,8 @@
   export let setFilter: (filter: string) => void;
 </script>
 
-<div>
-  <label for="category-filter">Filter by category: </label>
+<div class="filter-container">
+  <label for="category-filter">Filtrar por categoria: </label>
   {#each filters as filter}
     <button
       on:click={() => setFilter(filter)}
@@ -15,12 +15,20 @@
 </div>
 
 <style>
+  .filter-container {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
   button {
-    margin: 0.5rem;
-    padding: 0.5rem 1rem;
+    margin: 2px 6px;
+    padding: 8px 12px;
     border: none;
     background-color: #ccc;
     cursor: pointer;
+    border-radius: 10px;
   }
   .selected {
     background-color: #6200ea;

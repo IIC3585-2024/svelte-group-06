@@ -6,14 +6,18 @@
 
 {#if task}
   <div class="task-detail">
-    <h2>{task.name}</h2>
-    <p>Category: {task.category}</p>
+    <h2 class="item-name">{task.name}</h2>
+    <div class="item">Tiempo estimado: {task.estimatedTime} {task.timeUnit}</div>
+    <p class="item">Categoria: {task.category}</p>
+    {#if task.description}
+      <p class="item">Descripción: {task.description}</p>
+    {/if}
     {#if task.startTime}
-      <p>Started at: {task.startTime.toLocaleString()}</p>
+      <p class="item">Started at: {task.startTime.toLocaleString()}</p>
     {/if}
     {#if task.endTime}
-      <p>Ended at: {task.endTime.toLocaleString()}</p>
-      <p>
+      <p class="item">Ended at: {task.endTime.toLocaleString()}</p>
+      <p class="item">
         {#if task.startTime && task.endTime}
           Duration: {((task.endTime.getTime() - task.startTime.getTime()) / 1000).toFixed(2)} seconds
         {/if}
@@ -24,8 +28,18 @@
 
 <style>
   .task-detail {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item {
+    margin: 0;
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+  }
+  
+  .item-name {
+    margin: 0;
+    margin-bottom: 1rem;
   }
 </style>

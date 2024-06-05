@@ -11,7 +11,10 @@
     background-color: #6200ea;
     color: white;
     padding: 1rem;
+    font-weight: bolder;
     text-align: center;
+    border-radius: 4px;
+    margin-bottom: 1rem;
   }
   h1 {
     margin: 0;
