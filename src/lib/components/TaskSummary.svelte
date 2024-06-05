@@ -26,33 +26,51 @@
       </div>
     {/each}
   </div>
-  
 </div>
 
 <style>
   .resume-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+
+  .title-resume {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
   }
 
   .resume-info {
-    align-items: stretch;
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    padding: 1rem;
+    width: 100%;
   }
   
   .detail-card {
     padding: 1rem;
-    border: 2px solid #a2a1a1;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #6200ea;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
-  .title-resume {
+  .detail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .detail-card h3 {
     margin: 0;
-    margin-bottom: 1rem;
-    align-self: center;
+    font-size: 1.2rem;
+    color: #6200ea;
   }
 </style>
