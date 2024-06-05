@@ -19,7 +19,7 @@
       <p class="item">Ended at: {task.endTime.toLocaleString()}</p>
       <p class="item">
         {#if task.startTime && task.endTime}
-          Duration: {((task.endTime.getTime() - task.startTime.getTime()) / 1000).toFixed(2)} seconds
+            Duration: {((task.endTime.getTime() - task.startTime.getTime()) / 1000 / 60).toFixed(2)} minutes
         {/if}
       </p>
     {/if}

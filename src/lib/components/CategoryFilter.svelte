@@ -17,14 +17,16 @@
 <style>
   .filter-container {
     display: flex;
+    flex-direction: row;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    align-self: center;
     align-items: center;
   }
 
   button {
-    margin: 2px 6px;
-    padding: 8px 12px;
+    margin: 4px 8px;
+    padding: 8px 16px;
     border: none;
     background-color: #ccc;
     cursor: pointer;

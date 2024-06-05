@@ -14,7 +14,11 @@
 
 <div class="resume-container">
   <h2 class="title-resume">Tareas completadas hoy</h2>
-  <h3 class="title-resume">Total time spent: {totalTime.toFixed(2)} seconds</h3>
+  {#if totalTime > 3600}
+    <h3 class="title-resume">Total time spent: {(Math.floor(totalTime / 3600))} hours {(Math.floor((totalTime % 3600) / 60))} minutes</h3>
+  {:else}
+    <h3 class="title-resume">Total time spent: {(totalTime / 60).toFixed(2)} minutes</h3>
+  {/if}
   <div class="resume-info">
     {#each $dailySummary as task}
       <div class="detail-card"> 

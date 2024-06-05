@@ -33,14 +33,15 @@
 
   function stopTask() {
     task.endTime = new Date();
-    const duration = (task.endTime!.getTime() - task.startTime!.getTime()) / 1000;
     task.isCompleted = true;
     selected = false;
     stopTimer();
 
     tasks.update(tasks => tasks.filter(t => t.id !== task.id));
     completedTasks.update(tasks => [...tasks, task]);
-    notifications.set(`Task "${task.name}" completed in ${duration.toFixed(2)} seconds.`);
+    let durationInMinutes = (task.endTime!.getTime() - task.startTime!.getTime()) / 1000 / 60;
+    let durationInHours = durationInMinutes / 60;
+    notifications.set(`Task "${task.name}" completed in ${durationInMinutes.toFixed(2)} minutes (${durationInHours.toFixed(2)} hours).`);
   }
 
   function deleteTask() {
