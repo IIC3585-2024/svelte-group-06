@@ -8,7 +8,7 @@ Available in: [https://wasm.cparedesr.com/svelte](https://wasm.cparedesr.com/sve
 ## Features
 - Task Management: Add new tasks, view a list of tasks, view tasks details, deleting existing tasks and start and complete tasks.
 
-- API: Connection with google tasks API, with login to a google account (@uc.cl only), and get the google tasks saved in that account. 
+- API: Connection with google tasks API, with login to a google account (@uc.cl only), and get the google tasks saved in that account. **Important: You must log in with your jacastro18@uc.cl account because the Google Cloud project that enables the connection to the Google Tasks API is in Testing Stage. As a result, only tester users are authorized to make requests.**
 
 - Task Filtering: Filter tasks by category, 'All', 'Trabajo', 'Habitos', 'Deportes', 'Ocio', 'Estudios', and 'Otro'.
 
