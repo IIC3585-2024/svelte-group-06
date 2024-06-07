@@ -1,10 +1,15 @@
 <script lang="ts">
-  export let isOpen = false;
   export let task;
   import TaskDetail from "./TaskDetail.svelte";
+  import { modal } from "$lib/store";
+
+  let isOpen: boolean;
+  modal.subscribe(value => {
+    isOpen = value;
+  });
 
   function closeModal() {
-    return isOpen = false;
+    return modal.set(false);
   }
 </script>
 

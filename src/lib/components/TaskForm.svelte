@@ -8,12 +8,14 @@
   let description = '';
   let timeUnit = 'minutos';
 
-  function convertToMinutes() {
+  function convertToSeconds() {
     switch (timeUnit) {
       case 'horas':
-        return estimatedTime * 60;
+        return estimatedTime * 3600;
       case 'dias':
-        return estimatedTime * 60 * 24;
+        return estimatedTime * 3600 * 24;
+      case 'minutos':
+        return estimatedTime * 60;
       default:
         return estimatedTime;
     }
@@ -25,12 +27,13 @@
         id: Math.floor(Math.random() * 10000),
         name: taskName,
         category: category,
-        estimatedTime: estimatedTime,
-        timeUnit: timeUnit,
+        estimatedTime: convertToSeconds(),
         description: description || null,
         startTime: null,
         endTime: null,
-        isCompleted: false
+        isCompleted: false,
+        selected: false,
+        spentTime: 0
       };
       tasks.update(tasks => [...tasks, newTask]);
       taskName = '';

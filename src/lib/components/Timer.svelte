@@ -1,39 +1,60 @@
 <script lang="ts">
-  import { timer } from '../store.js';
+  import { time, timer, currentTask, notifications, type Task, tasks, completedTasks } from '../store.js';
 
-  let time = 0;
-  let intervalId: number | undefined;
+  let intervalId: NodeJS.Timeout | undefined;
+
+  let number_time: number;
+
+  time.subscribe(value => {
+    number_time = value;
+  });
 
   const startTimer = (duration: number) => {
-    time = duration;
+    time.set(duration);
     intervalId = setInterval(tick, 1000);
   };
 
   const stopTimer = () => {
     clearInterval(intervalId);
-    time = 0;
+    time.set(0);
   };
 
   timer.set({ startTimer, stopTimer });
 
-  const tick = () => {
-    if (time > 0) {
-      time--;
-    } else {
-      stopTimer();
-      notify();
+  let task: Task = {} as Task;
+  currentTask.subscribe(value => {
+    if (task) {
+      task = value;
     }
+  });
+
+  const tick = () => {
+    time.update(currentTime => {
+      if (currentTime > 0) {
+        return currentTime - 1;
+      } else {
+        stopTimer();
+        task.endTime = new Date();
+        task.isCompleted = true;
+        tasks.update(tasks => tasks.filter(t => t.id !== task.id));
+        completedTasks.update(tasks => [...tasks, task]);
+        notify();
+        return 0;
+      }
+    });
   };
 
   const notify = () => {
-    console.log('Time is up!'); 
+    let durationInMinutes = (task.endTime!.getTime() - task.startTime!.getTime()) / 1000 / 60;
+    let durationInHours = durationInMinutes / 60;
+    notifications.set(`Task "${task.name}" completed in ${durationInMinutes.toFixed(2)} minutes (${durationInHours.toFixed(2)} hours).`);
   };
 
   const pad = (num: number) => num.toString().padStart(2, '0');
 </script>
 
 <div class="clock">
-  <span>{pad(Math.floor(time / 3600))}</span>:<span>{pad(Math.floor((time % 3600) / 60))}</span>:<span>{pad(time % 60)}</span>
+  <span>{pad(Math.floor(number_time / 3600))}</span>:<span>{pad(Math.floor((number_time % 3600) / 60))}</span>:<span>{pad(number_time % 60)}</span>
 </div>
 
 <style>

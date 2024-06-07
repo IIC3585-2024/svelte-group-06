@@ -67,10 +67,4 @@
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
-
-  .detail-card h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #6200ea;
-  }
 </style>

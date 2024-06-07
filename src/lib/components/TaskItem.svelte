@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { tasks, completedTasks, notifications, timer } from '../store';
+  import { tasks, completedTasks, notifications, timer, currentTask, time, modal } from '../store';
   import Modal from './Modal.svelte';
   import type { Task } from '../store';
   export let task: Task;
 
-  let isOpen = false;
-  let selected = false;
+  let actualTask: Task = {} as Task;
 
   let startTimer: (duration: number) => void;
   let stopTimer: () => void;
@@ -17,56 +16,67 @@
     }
   });
 
+  currentTask.subscribe(value => {
+    if (value) {
+      actualTask = value;
+    }
+  });
+
   function startTask() {
+    if (actualTask.selected) {
+      stopTimer();
+      actualTask.selected = false;
+      const timeSpent = Math.round((new Date().getTime() - actualTask.startTime!.getTime()) / 1000);
+      actualTask.estimatedTime = actualTask.estimatedTime - timeSpent;
+      actualTask.spentTime += timeSpent;
+      tasks.update(tasks => tasks.map(t => t.id === actualTask.id ? actualTask : t));
+    }
+    currentTask.set(task);
     task.startTime = new Date();
     let duration = task.estimatedTime;
-    if (task.timeUnit === 'minutos') {
-      duration *= 60;
-    } else if (task.timeUnit === 'horas') {
-      duration *= 3600;
-    } else if (task.timeUnit === 'dias') {
-      duration *= 3600 * 24;
-    }
     startTimer(duration);
-    selected = true;
+    task.selected = true;
   }
 
   function stopTask() {
+    currentTask.set({} as Task);
     task.endTime = new Date();
     task.isCompleted = true;
-    selected = false;
+    task.selected = false;
     stopTimer();
 
     tasks.update(tasks => tasks.filter(t => t.id !== task.id));
     completedTasks.update(tasks => [...tasks, task]);
-    let durationInMinutes = (task.endTime!.getTime() - task.startTime!.getTime()) / 1000 / 60;
+    let durationInMinutes = (((task.endTime!.getTime() - task.startTime!.getTime()) / 1000) + task.spentTime) / 60;
     let durationInHours = durationInMinutes / 60;
     notifications.set(`Task "${task.name}" completed in ${durationInMinutes.toFixed(2)} minutes (${durationInHours.toFixed(2)} hours).`);
   }
 
   function deleteTask() {
+    stopTimer();
+    currentTask.set({} as Task);
     tasks.update(tasks => tasks.filter(t => t.id !== task.id));
   }
 
-  function openModal(task: Task) {
-    isOpen = true;
+  function openModal() {
+    modal.set(true);
   }
 </script>
 
-<div class="card" class:selected={selected}>
+<div class="card" class:selected={task.selected}>
   <h2 class="card__name">{task.name}</h2>
   <div class="buttons-container">
-    {#if task.startTime}
-    <button class="button-stop" on:click={stopTask}>Completar</button>
+    {#if task.selected}
+      <button class="button-stop" on:click={stopTask}>Completar</button>
     {:else}
       <button class="button-start" on:click={startTask}>Comenzar</button>
     {/if}
-    <button class="button-detail" on:click={() => openModal(task)}>Detalles</button>
+    <button class="button-detail" on:click={() => openModal()}>Detalles</button>
     <button class="button-delete" on:click={deleteTask}>Eliminar</button>
   </div>
 </div>
 
-<Modal {isOpen} {task} />
+<Modal {task} />
 
 <style>
   .button-start,
