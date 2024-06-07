@@ -1,38 +1,32 @@
-# create-svelte
+# TaskTimer - Svelte
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Our Task Timer app, developed with Sveltekit, is an app where you can store and see your tasks, included with google task api, you can manage and see that tasks also. You can create and complete this activities with a timer display to see your progress and a summary of completed tasks. 
 
-## Creating a project
+## Web
+Available in: 
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+- Task Management: Add new tasks, view a list of tasks, view tasks details, deleting existing tasks and start and complete tasks.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- API: Connection with google tasks API, with login to a google account (@uc.cl only), and get the google tasks saved in that account. 
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- Task Filtering: Filter tasks by category, 'All', 'Trabajo', 'Habitos', 'Deportes', 'Ocio', 'Estudios', and 'Otro'.
 
-## Developing
+- Task Summary: View of a summary of tasks done, with time spended display and total time spended for all the tasks.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Timer: Visual feedback of tasks in progress with timer that show how much time is left to the tasks end.
 
-```bash
-npm run dev
+- Notifications: Simple notifications when tasks end.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Stack
 
-## Building
+- Svelte (SvelteKit)
+- Typescript
+- Supabase (API Connection + Auth)
 
-To create a production version of your app:
+## Team
 
-```bash
-npm run build
-```
+- Valentina Campaña
+- Cristóbal Carrasco
+- Carlos Paredes
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
