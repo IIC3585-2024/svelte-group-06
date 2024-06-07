@@ -4,13 +4,8 @@
 	import TaskDetail from './TaskDetail.svelte';
   // import type { Task } from '../store';
 
-  console.log($completedTasks);
-
   const dailySummary = derived(completedTasks, $completedTasks => {
     const today = new Date().toISOString().split('T')[0];
-    if ($completedTasks[0].endTime) {
-      console.log(new Date($completedTasks[0].endTime));
-    }
     return $completedTasks.filter(task => task.endTime && new Date(task.endTime).toISOString().split('T')[0] === today);
   });
 
