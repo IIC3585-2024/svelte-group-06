@@ -3,7 +3,7 @@
 Our Task Timer app, developed with Sveltekit, is an app where you can store and see your tasks, included with google task api, you can manage and see that tasks also. You can create and complete this activities with a timer display to see your progress and a summary of completed tasks. 
 
 ## Web
-Available in: 
+Available in: [https://wasm.cparedesr.com/svelte] https://wasm.cparedesr.com/svelte
 
 ## Features
 - Task Management: Add new tasks, view a list of tasks, view tasks details, deleting existing tasks and start and complete tasks.
