@@ -4,12 +4,17 @@
 	import TaskDetail from './TaskDetail.svelte';
   // import type { Task } from '../store';
 
+  console.log($completedTasks);
+
   const dailySummary = derived(completedTasks, $completedTasks => {
     const today = new Date().toISOString().split('T')[0];
-    return $completedTasks.filter(task => task.endTime && task.endTime.toISOString().split('T')[0] === today);
+    if ($completedTasks[0].endTime) {
+      console.log(new Date($completedTasks[0].endTime));
+    }
+    return $completedTasks.filter(task => task.endTime && new Date(task.endTime).toISOString().split('T')[0] === today);
   });
 
-  $: totalTime = $dailySummary.reduce((acc, task) => acc + (task.endTime!.getTime() - task.startTime!.getTime()) / 1000, 0);
+  $: totalTime = $dailySummary.reduce((acc, task) => acc + (new Date(task.endTime!).getTime() - new Date(task.startTime!).getTime()) / 1000 + task.spentTime, 0);
 </script>
 
 <div class="resume-container">

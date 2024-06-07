@@ -7,7 +7,7 @@
   let actualTask: Task = {} as Task;
 
   let startTimer: (duration: number) => void;
-  let stopTimer: () => void;
+  let stopTimer: () => Promise<void>;
 
   timer.subscribe(value => {
     if (value) {
@@ -22,9 +22,9 @@
     }
   });
 
-  function startTask() {
+  async function startTask() {
+    await stopTimer();
     if (actualTask.selected) {
-      stopTimer();
       actualTask.selected = false;
       const timeSpent = Math.round((new Date().getTime() - actualTask.startTime!.getTime()) / 1000);
       actualTask.estimatedTime = actualTask.estimatedTime - timeSpent;
@@ -38,12 +38,13 @@
     task.selected = true;
   }
 
-  function stopTask() {
+  async function stopTask() {
+    await stopTimer();
     currentTask.set({} as Task);
     task.endTime = new Date();
     task.isCompleted = true;
     task.selected = false;
-    stopTimer();
+    
 
     tasks.update(tasks => tasks.filter(t => t.id !== task.id));
     completedTasks.update(tasks => [...tasks, task]);
@@ -52,8 +53,8 @@
     notifications.set(`Task "${task.name}" completed in ${durationInMinutes.toFixed(2)} minutes (${durationInHours.toFixed(2)} hours).`);
   }
 
-  function deleteTask() {
-    stopTimer();
+  async function deleteTask() {
+    await stopTimer();
     currentTask.set({} as Task);
     tasks.update(tasks => tasks.filter(t => t.id !== task.id));
   }

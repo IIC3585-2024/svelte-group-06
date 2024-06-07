@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { localStorageStore } from '../localStorageStore';
 
 export interface Task {
   id: number;
@@ -16,14 +17,14 @@ export interface Task {
 
 export interface Timer {
   startTimer: (duration: number) => void;
-  stopTimer: () => void;
+  stopTimer: () => Promise<void>;
 }
 
-export const tasks = writable<Task[]>([]);
-export const completedTasks = writable<Task[]>([]);
+export const tasks = localStorageStore<Task[]>('tasks', []);
+export const completedTasks = localStorageStore<Task[]>('completedTasks', []);
 export const notifications = writable<string>('');
 export const timer = writable<Timer>({} as Timer);
-export const currentTask = writable<Task>({} as Task);
-export const isTimerRunning = writable<boolean>(false);
+export const currentTask = localStorageStore<Task>('currentTask', {} as Task);
 export const time = writable<number>(0);
 export const modal = writable<boolean>(false);
+export const interval = writable<NodeJS.Timeout | void>();

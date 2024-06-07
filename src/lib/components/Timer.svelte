@@ -1,7 +1,13 @@
 <script lang="ts">
-  import { time, timer, currentTask, notifications, type Task, tasks, completedTasks } from '../store.js';
+  import { time, timer, currentTask, notifications, type Task, tasks, completedTasks, interval } from '../store.js';
 
   let intervalId: NodeJS.Timeout | undefined;
+
+  interval.subscribe(value => {
+    if (value) {
+      intervalId = value;
+    }
+  });
 
   let number_time: number;
 
@@ -10,13 +16,17 @@
   });
 
   const startTimer = (duration: number) => {
+    interval.set(clearInterval(intervalId));
     time.set(duration);
-    intervalId = setInterval(tick, 1000);
+    interval.set(setInterval(tick, 1000));
   };
 
-  const stopTimer = () => {
-    clearInterval(intervalId);
-    time.set(0);
+  const stopTimer = (): Promise<void> => {
+    return new Promise<void>(resolve => {
+      interval.set(clearInterval(intervalId));
+      time.set(0);
+      resolve();
+    });
   };
 
   timer.set({ startTimer, stopTimer });
@@ -36,6 +46,7 @@
         stopTimer();
         task.endTime = new Date();
         task.isCompleted = true;
+        task.selected = false;
         tasks.update(tasks => tasks.filter(t => t.id !== task.id));
         completedTasks.update(tasks => [...tasks, task]);
         notify();
